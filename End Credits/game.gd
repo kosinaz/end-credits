@@ -171,6 +171,8 @@ var current_line_index = 0
 var line_spacing = 70  # Spacing between lines
 var line_timer = 0.0  # Timer to control line generation
 var line_interval = 1.2  # Time (in seconds) between line generations
+onready var player_1 = $Player
+onready var player_2 = $Player2
 
 func _ready():
 	initialize_word_pool()
@@ -178,6 +180,13 @@ func _ready():
 	current_line_index += 5
 
 func _process(delta):
+	if (player_1.position.y < - 17 or player_1.position.y > 700) and (player_2.position.y < - 17 or player_2.position.y > 700): 
+		# warning-ignore:return_value_discarded
+		get_tree().reload_current_scene()
+	if player_1.position.y < - 17 or player_1.position.y > 700:
+		player_2.dead = true
+	if player_2.position.y < - 17 or player_2.position.y > 700:
+		player_1.dead = true
 	for word in get_children():
 		word.position.y -= 50 * delta  # Adjust scrolling speed as needed
 		if word.position.y < -60:

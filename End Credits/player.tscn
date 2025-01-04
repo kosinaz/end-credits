@@ -4,62 +4,50 @@
 [ext_resource path="res://player.gd" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=15]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 114, 0, 17, 17 )
 
 [sub_resource type="AtlasTexture" id=2]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 17, 17 )
 
 [sub_resource type="AtlasTexture" id=3]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 19, 0, 17, 17 )
 
 [sub_resource type="AtlasTexture" id=4]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 38, 0, 17, 17 )
 
 [sub_resource type="AtlasTexture" id=5]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 57, 0, 17, 17 )
 
 [sub_resource type="AtlasTexture" id=6]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 76, 0, 17, 17 )
 
 [sub_resource type="AtlasTexture" id=7]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 95, 0, 17, 17 )
 
 [sub_resource type="AtlasTexture" id=19]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 228, 0, 19, 17 )
 
 [sub_resource type="AtlasTexture" id=8]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 114, 0, 17, 17 )
 
 [sub_resource type="AtlasTexture" id=17]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 133, 0, 17, 17 )
 
 [sub_resource type="AtlasTexture" id=10]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 152, 0, 17, 17 )
 
 [sub_resource type="AtlasTexture" id=12]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 190, 0, 17, 17 )
 
@@ -94,7 +82,6 @@ script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 1.19209e-07, 0 )
-scale = Vector2( 0.970588, 1 )
 frames = SubResource( 16 )
 animation = "off"
 
