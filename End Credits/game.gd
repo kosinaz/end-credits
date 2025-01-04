@@ -118,7 +118,7 @@ var text_lines = [
 	"Rowdies Bold by Jaikishan Patel",
 	"",
 	"",
-	"Wall of Quadraman",
+	"Walls of Quadraman",
 	"",
 	"Code",
 	"Zoltan Kosina",
@@ -152,6 +152,20 @@ var text_lines = [
 	"Xylesizer",
 	"Transition Signal 5",
 	"Intro 3",
+	"",
+	"",
+	"End Credits",
+	"",
+	"Code",
+	"Zoltan Kosina",
+	"ChatGPT",
+	"Art",
+	"Zoltan Kosina",
+	"Font",
+	"Oswald by Vernon Adams, Kalapi Gajjar, Cyreal",
+	"",
+	"",
+	
 ]
 var current_line_index = 0
 var line_spacing = 70  # Spacing between lines
@@ -219,6 +233,7 @@ func generate_initial_text():
 
 func generate_line(line_id, offset = 0):
 	if line_id >= text_lines.size():
+		current_line_index = 0
 		line_id = 0
 	var line = text_lines[line_id]
 	if line.length() < 1:
