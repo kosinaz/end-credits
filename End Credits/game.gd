@@ -2,13 +2,12 @@ extends Node2D
 
 var word_scene = preload("res://word.tscn")
 var dynamic_font = preload("res://word_font.tres")
-var y_position = 200  # Starting Y position for the first line
 var word_pool = []
 var text_lines = [
 	"Steamboats of Rogue River",
 	"",
 	"Code, art, and music by Kosina Zoltán.",
-	"Art", 
+	"Art",
 	"Inspired by Walt Disney Animation Studios' Steamboat Willie",
 	"Font",
 	"Crunch Chips by The Docallisme - Amry Al Mursalaat",
@@ -56,17 +55,26 @@ var text_lines = [
 	"Alagard by Hewett Tsoi",
 	"Old London by Dieter Steffmann",
 ]
+var current_line_index = 0
+var line_spacing = 70  # Spacing between lines
+var line_timer = 0.0  # Timer to control line generation
+var line_interval = 1.2  # Time (in seconds) between line generations
 
 func _ready():
 	initialize_word_pool()
 	generate_initial_text()
+	current_line_index += 5
 
 func _process(delta):
 	for word in get_children():
+		word.position.y -= 50 * delta  # Adjust scrolling speed as needed
 		if word.position.y < -60:
 			recycle_word(word)
-		else:
-			word.position.y -= 50 * delta  # Adjust scrolling speed as needed
+	
+	line_timer += delta
+	if line_timer >= line_interval:
+		line_timer = 0.0
+		add_next_line()
 
 func recycle_word(word):
 	word.hide()
@@ -84,55 +92,56 @@ func spawn_word(text: String, position: Vector2):
 	var word_instance = word_pool.pop_front()
 	word_instance.set_text(text)
 	word_instance.position = position
-
-	# Refine the collision box
+	
+	# Refine the collision box to match the word's actual size
 	var collision_shape = word_instance.get_node("CollisionShape2D")  # Adjust path to your CollisionShape2D
 	if collision_shape:
 		var shape = collision_shape.shape as RectangleShape2D
 		if shape:
-			# Calculate the word's actual width
+			# Calculate the word's actual width using the dynamic font
 			var word_width = dynamic_font.get_string_size(text).x
 			var word_height = dynamic_font.get_height()
 
 			# Set the size of the collision box based on word size
 			shape.extents = Vector2(word_width / 2, word_height / 2)
 
-			# Reduce size for finer collisions
-			shape.extents.x -= 0  # Adjust right side reduction
-			shape.extents.y -= 14  # Adjust top/bottom reduction
+			# Optionally, fine-tune the collision box for better precision
+			shape.extents.x -= 0  # Adjust right side reduction, if needed
+			shape.extents.y -= 12  # Adjust top/bottom reduction (to make it smaller vertically)
 
-			# Optional: Recenter collision box if needed
-			collision_shape.position = Vector2(shape.extents.x, shape.extents.y) + Vector2(0, 20)
+			# Optional: Recenter the collision box if needed (can also adjust y_offset to avoid misalignment)
+			collision_shape.position = Vector2(shape.extents.x, shape.extents.y) + Vector2(0, 18)  # Adjust this offset if necessary
 
 	word_instance.show()
 	word_pool.append(word_instance)
 
-
-
 func generate_initial_text():
-	for i in range(10):
-		generate_line(i)
+	for i in range(5):
+		generate_line(current_line_index + i, i * 70 - 280)
 
-func generate_line(i):
-		var line = text_lines[i]
-		var words = line.split(" ")
-		var line_width = 0
+func generate_line(line_id, offset = 0):
+	if line_id >= text_lines.size():
+		return
+	var line = text_lines[line_id]
+	var words = line.split(" ")
+	var line_width = 0
 
-		# Calculate the total width of the line
-		for word in words:
-			line_width += calculate_word_width(word) + 10  # Add word spacing
+	# Calculate the total width of the line
+	for word in words:
+		line_width += calculate_word_width(word) + 10  # Add word spacing
+	line_width -= 10  # Remove trailing spacing after the last word
 
-		line_width -= 10  # Remove trailing spacing after the last word
+	# Center the line by adjusting x_offset
+	var x_offset = (get_viewport_rect().size.x - line_width) / 2
+	var y_position = get_viewport_rect().size.y  # Start just below the screen bottom
 
-		# Center the line by adjusting x_offset
-		var x_offset = (get_viewport_rect().size.x - line_width) / 2
+	for word in words:
+		spawn_word(word, Vector2(x_offset, y_position + offset))
+		x_offset += calculate_word_width(word) + 20  # Add spacing between words
 
-		for word in words:
-			spawn_word(word, Vector2(x_offset, y_position))
-			x_offset += calculate_word_width(word) + 20  # Add spacing between words
-
-		y_position += 70  # Move to the next line
-
+func add_next_line():
+	generate_line(current_line_index)
+	current_line_index += 1
 
 func calculate_word_width(word: String) -> float:
 	# Measure the width of the word using the provided font
