@@ -91,7 +91,7 @@ func initialize_word_pool():
 func spawn_word(text: String, position: Vector2):
 	var word_instance = word_pool.pop_front()
 	word_instance.set_text(text)
-	word_instance.position = position
+	word_instance.position = position - Vector2(60, 0)
 	
 	# Refine the collision box to match the word's actual size
 	var collision_shape = word_instance.get_node("CollisionShape2D")  # Adjust path to your CollisionShape2D
