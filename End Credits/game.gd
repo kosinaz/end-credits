@@ -123,6 +123,8 @@ func generate_line(line_id, offset = 0):
 	if line_id >= text_lines.size():
 		return
 	var line = text_lines[line_id]
+	if line.length() < 1:
+		return
 	var words = line.split(" ")
 	var line_width = 0
 
@@ -137,7 +139,7 @@ func generate_line(line_id, offset = 0):
 
 	for word in words:
 		spawn_word(word, Vector2(x_offset, y_position + offset))
-		x_offset += calculate_word_width(word) + 20  # Add spacing between words
+		x_offset += calculate_word_width(word) + 25  # Add spacing between words
 
 func add_next_line():
 	generate_line(current_line_index)
