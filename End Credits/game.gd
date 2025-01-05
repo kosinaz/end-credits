@@ -161,6 +161,8 @@ var text_lines = [
 	"ChatGPT",
 	"Art",
 	"Zoltan Kosina",
+	"Music",
+	"Game Music: Credits 2 by AlesiaDavina from Pixabay",
 	"Font",
 	"Oswald by Vernon Adams, Kalapi Gajjar, Cyreal",
 	"",
@@ -184,10 +186,14 @@ func _process(delta):
 		# warning-ignore:return_value_discarded
 		get_tree().reload_current_scene()
 	if player_1.position.y < - 17 or player_1.position.y > 700:
+		player_1.dead = true
 		player_2.dead = true
 	if player_2.position.y < - 17 or player_2.position.y > 700:
 		player_1.dead = true
+		player_2.dead = true
 	for word in get_children():
+		if word.name == "AudioStreamPlayer":
+			continue
 		word.position.y -= 50 * delta  # Adjust scrolling speed as needed
 		if word.position.y < -60:
 			recycle_word(word)

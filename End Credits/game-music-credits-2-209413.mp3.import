@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/game-music-credits-2-209413.mp3-c655adfeca4c117c8503c679ecce5fc9.mp3str"
+
+[deps]
+
+source_file="res://game-music-credits-2-209413.mp3"
+dest_files=[ "res://.import/game-music-credits-2-209413.mp3-c655adfeca4c117c8503c679ecce5fc9.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
